@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.21.2] - 2026-03-09
+
 ### Added
 - Added "Dev Log" toggle in extra settings (popup and settings page): enables/disables console logs for debugging. Disabled by default.
 
@@ -592,7 +594,8 @@ optimize waitForElement to reduce DOM queries (checking addedNodes only)
 
 *Note: This changelog was introduced in version 2.2.30. For earlier version history, please refer to the [GitHub releases](https://github.com/YouG-o/YouTube_No_Translation/releases).*
 
-[Unreleased]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.21.1...HEAD
+[Unreleased]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.21.2...HEAD
+[2.21.2]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.21.1...v2.21.2
 [2.21.1]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.20.2...v2.21.1
 [2.20.2]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.20.1...v2.20.2
 [2.20.1]: https://github.com/YouG-o/YouTube_No_Translation/compare/v2.20.0...v2.20.1
