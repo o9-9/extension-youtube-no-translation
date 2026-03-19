@@ -27,4 +27,26 @@ function isYouTubeMusic(): boolean {
     return window.location.hostname === 'music.youtube.com';
 }
 
-export { isSearchResultsPage, isVideoPage, isMobileSite, isYouTubeMusic };
+/**
+ * Checks if the current page is an embedded video player (e.g. youtube-nocookie.com/embed/...)
+ */
+function isEmbedVideo(): boolean {
+    return window.location.pathname.startsWith('/embed/');
+}
+
+/**
+ * Checks if the current context is an iframe that should be ignored by the extension
+ * (e.g. live chat, background auth pages, etc.).
+ * Returns true if we are in an iframe AND it is not an embedded video player.
+ */
+function isIrrelevantIframe(): boolean {
+    // If we are in the top window, we are relevant.
+    if (window === window.top) {
+        return false;
+    }
+
+    // If we are in an iframe, we are only relevant if it's an embed player.
+    return !isEmbedVideo();
+}
+
+export { isSearchResultsPage, isVideoPage, isMobileSite, isYouTubeMusic, isEmbedVideo, isIrrelevantIframe };

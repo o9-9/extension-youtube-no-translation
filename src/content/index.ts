@@ -21,7 +21,7 @@ import { refreshDescription } from './description/MainDescription';
 import { handleAudioTranslation } from './audio/audioIndex';
 import { handleSubtitlesTranslation } from './subtitles/subtitlesIndex';
 import { maybeShowSupportToast } from './SupportToast/toast';
-import { isMobileSite, isYouTubeMusic } from '../utils/navigation';
+import { isMobileSite, isYouTubeMusic, isIrrelevantIframe, isEmbedVideo } from '../utils/navigation';
 
 
 coreLog('Content script starting to load...');
@@ -50,16 +50,17 @@ async function fetchSettings() {
     }
 };
 
-// Helper functions to detect if we're on an embed video (like youtube-nocookie.com)
-function isEmbedVideo(): boolean {
-    return window.location.pathname.startsWith('/embed/');
-}
-
 // Initialize features based on settings
 async function initializeFeatures() {
 
     if (isYouTubeMusic()) {
         coreLog('YouTube Music detected; extension disabled for this domain.');
+        return;
+    }
+
+    // Prevent initializing in irrelevant iframes (live chat, background auth pages, etc.)
+    // We only allow top-level windows OR embed pages.
+    if (isIrrelevantIframe()) {
         return;
     }
     

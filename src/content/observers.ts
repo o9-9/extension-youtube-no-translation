@@ -15,7 +15,7 @@ import { currentSettings } from './index';
 import { extractVideoIdFromUrl, extractVideoIdFromWatchFlexy } from '../utils/video';
 import { applyVideoPlayerSettings } from '../utils/videoSettings';
 import { waitForElement, waitForFilledVideoTitles } from '../utils/dom';
-import { isMobileSite } from '../utils/navigation'
+import { isMobileSite, isIrrelevantIframe } from '../utils/navigation'
 
 import { refreshMainTitle, refreshEmbedTitle, refreshMiniplayerTitle, cleanupMainTitleContentObserver ,cleanupIsEmptyObserver, cleanupPageTitleObserver, cleanupEmbedTitleContentObserver, cleanupMiniplayerTitleContentObserver } from './titles/mainTitle';
 import { refreshBrowsingVideos, cleanupAllBrowsingTitlesElementsObservers } from './titles/browsingTitles';
@@ -752,7 +752,7 @@ const URL_CHANGE_DEBOUNCE_MS = 250;
 
 export function setupUrlObserver() {
     // Prevent initializing observers in irrelevant iframes (live chat, background auth pages, etc.)
-    if (window !== window.top && !window.location.pathname.startsWith('/embed')) {
+    if (isIrrelevantIframe()) {
         coreLog(`[URL] Ignored observer setup for iframe: ${window.location.href}`);
         return;
     }

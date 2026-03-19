@@ -9,6 +9,7 @@
 
 import { titlesLog, titlesErrorLog, coreLog } from '../../utils/logger';
 import type { CacheData, CacheEntry } from '../../types/types';
+import { isIrrelevantIframe } from '../../utils/navigation';
 
 /**
  * Persistent cache manager for video titles using browser.storage.local.
@@ -27,6 +28,11 @@ export class TitleCache {
      * Loads the cache from browser.storage.local.
      */
     async loadCache(): Promise<void> {
+        // Prevent loading cache in irrelevant iframes (live chat, etc.)
+        if (isIrrelevantIframe()) {
+            return;
+        }
+
         try {
             const result = await browser.storage.local.get('ynt-cache');
             const cacheData = result['ynt-cache'] as CacheData;
